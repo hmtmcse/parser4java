@@ -3,7 +3,11 @@ package com.hmtmcse.parser4java;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.hmtmcse.fileutil.data.TextFileData;
+import com.hmtmcse.fileutil.text.TextFile;
 import com.hmtmcse.parser4java.common.Parser4JavaException;
+
+import java.util.LinkedHashMap;
 
 public class YamlProcessor {
 
@@ -17,5 +21,16 @@ public class YamlProcessor {
         }
     }
 
+    public LinkedHashMap ymlAsMap(String location) throws Parser4JavaException {
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        try {
+            TextFile textFile = new TextFile();
+            TextFileData textFileData = textFile.fileToString(location);
+            return mapper.readValue(textFileData.text, LinkedHashMap.class);
+        } catch (Exception e) {
+            throw new Parser4JavaException(e.getMessage());
+        }
+    }
 
 }
