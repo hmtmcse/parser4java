@@ -29,7 +29,7 @@ public class YamlProcessor {
     public <T> T ymlAsNestedKlassFromString(String content, Class<T> klass) throws Parser4JavaException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         try {
             return mapper.readValue(content, klass);
         } catch (Exception e) {
