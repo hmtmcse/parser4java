@@ -26,14 +26,22 @@ public class YamlProcessor {
         return ymlAsNestedKlass(location, LinkedHashMap.class);
     }
 
-    public <T> T ymlAsNestedKlass(String location, Class<T> klass) throws Parser4JavaException {
+    public <T> T ymlAsNestedKlassFromString(String content, Class<T> klass) throws Parser4JavaException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
+            return mapper.readValue(content, klass);
+        } catch (Exception e) {
+            throw new Parser4JavaException(e.getMessage());
+        }
+    }
+
+    public <T> T ymlAsNestedKlass(String location, Class<T> klass) throws Parser4JavaException {
+        try {
             TextFile textFile = new TextFile();
             TextFileData textFileData = textFile.fileToString(location);
-            return mapper.readValue(textFileData.text, klass);
+            return ymlAsNestedKlassFromString(textFileData.text, klass);
         } catch (Exception e) {
             throw new Parser4JavaException(e.getMessage());
         }
