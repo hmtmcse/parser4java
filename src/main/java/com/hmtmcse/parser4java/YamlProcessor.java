@@ -37,6 +37,7 @@ public class YamlProcessor {
         }
     }
 
+
     public <T> T ymlAsNestedKlass(String location, Class<T> klass) throws Parser4JavaException {
         try {
             TextFile textFile = new TextFile();
