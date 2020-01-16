@@ -1,6 +1,7 @@
 package com.hmtmcse.parser4java;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.hmtmcse.fileutil.data.TextFileData;
@@ -28,6 +29,7 @@ public class YamlProcessor {
     public <T> T ymlAsNestedKlass(String location, Class<T> klass) throws Parser4JavaException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
             TextFile textFile = new TextFile();
             TextFileData textFileData = textFile.fileToString(location);
