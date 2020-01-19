@@ -22,6 +22,15 @@ public class YamlProcessor {
         }
     }
 
+    public String klassToStringRaw(Object data) throws Parser4JavaException {
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        try {
+            return mapper.writeValueAsString(data);
+        } catch (Exception e) {
+            throw new Parser4JavaException(e.getMessage());
+        }
+    }
+
     public LinkedHashMap ymlAsMap(String location) throws Parser4JavaException {
         return ymlAsNestedKlass(location, LinkedHashMap.class);
     }
