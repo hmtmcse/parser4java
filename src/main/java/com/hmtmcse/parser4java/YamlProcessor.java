@@ -35,6 +35,10 @@ public class YamlProcessor {
         return ymlAsNestedKlass(location, LinkedHashMap.class);
     }
 
+    public LinkedHashMap ymlAsMapFromString(String content) throws Parser4JavaException {
+        return ymlAsNestedKlassFromString(content, LinkedHashMap.class);
+    }
+
     public <T> T ymlAsNestedKlassFromString(String content, Class<T> klass) throws Parser4JavaException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
