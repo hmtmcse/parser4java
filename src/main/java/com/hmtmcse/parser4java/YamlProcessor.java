@@ -24,6 +24,7 @@ public class YamlProcessor {
 
     public String klassToStringRaw(Object data) throws Parser4JavaException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         try {
             return mapper.writeValueAsString(data);
         } catch (Exception e) {
