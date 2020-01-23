@@ -32,21 +32,33 @@ public class YmlConfigLoader {
         return defaultValue;
     }
 
+    public static Object getMapNestedValue(String location, String defaultValue, String... keys) {
+        try {
+            YamlProcessor _yamlProcessor = new YamlProcessor();
+            return getMapNestedValue(_yamlProcessor.ymlAsMap(location), defaultValue, keys);
+        } catch (Exception e) {
+            return defaultValue;
+        }
+    }
 
-    public static Object getMapNestedValue(String defaultValue, String ...keys){
-        if (ymlLinkedHashMap != null){
-            LinkedHashMap<String, Object> temp = ymlLinkedHashMap;
-            for (String key : keys){
-                if (temp.get(key) == null){
+    public static Object getMapNestedValue(LinkedHashMap<String, Object> ymlMap, String defaultValue, String... keys) {
+        if (ymlMap != null) {
+            LinkedHashMap<String, Object> temp = ymlMap;
+            for (String key : keys) {
+                if (temp.get(key) == null) {
                     return defaultValue;
-                }else if (temp.get(key) instanceof LinkedHashMap){
+                } else if (temp.get(key) instanceof LinkedHashMap) {
                     temp = (LinkedHashMap<String, Object>) temp.get(key);
-                }else{
+                } else {
                     return temp.get(key);
                 }
             }
         }
         return defaultValue;
+    }
+
+    public static Object getMapNestedValue(String defaultValue, String... keys) {
+        return getMapNestedValue(ymlLinkedHashMap, defaultValue, keys);
     }
 
     public static String getMapNestedValueAsString(String defaultValue, String ...keys){
