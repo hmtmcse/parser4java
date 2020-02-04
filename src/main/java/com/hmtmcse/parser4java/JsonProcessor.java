@@ -21,6 +21,16 @@ public class JsonProcessor {
         }
     }
 
+    public String objectToJsonRaw(Object data) throws Parser4JavaException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        try {
+            return mapper.writeValueAsString(data);
+        } catch (Exception e) {
+            throw new Parser4JavaException(e.getMessage());
+        }
+    }
+
     public String objectToJson(Object data) throws Parser4JavaException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
