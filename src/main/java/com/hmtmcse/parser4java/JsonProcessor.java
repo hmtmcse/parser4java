@@ -4,6 +4,7 @@ package com.hmtmcse.parser4java;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hmtmcse.parser4java.common.Parser4JavaException;
 
@@ -48,6 +49,16 @@ public class JsonProcessor {
         mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         try {
             return mapper.convertValue(data, LinkedHashMap.class);
+        } catch (Exception e) {
+            throw new Parser4JavaException(e.getMessage());
+        }
+    }
+
+    public <T> T objectFromText(String text, Class<T> klass) throws Parser4JavaException {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            return klass.cast(objectMapper.readValue(text, klass));
         } catch (Exception e) {
             throw new Parser4JavaException(e.getMessage());
         }
