@@ -13,10 +13,18 @@ import java.util.LinkedHashMap;
 public class JsonProcessor {
 
     public String klassToString(Object data) throws Parser4JavaException {
+        return klassToString(data, false);
+    }
+
+    public String klassToString(Object data, Boolean isPrettify) throws Parser4JavaException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
-            return mapper.writeValueAsString(data);
+            if (isPrettify) {
+                return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
+            } else {
+                return mapper.writeValueAsString(data);
+            }
         } catch (Exception e) {
             throw new Parser4JavaException(e.getMessage());
         }
