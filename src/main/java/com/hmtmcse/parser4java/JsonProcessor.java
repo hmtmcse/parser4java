@@ -62,6 +62,10 @@ public class JsonProcessor {
         }
     }
 
+    public LinkedHashMap stringToMap(String data) throws Parser4JavaException {
+        return objectFromText(data, LinkedHashMap.class);
+    }
+
     public <T> T objectFromText(String text, Class<T> klass) throws Parser4JavaException {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
