@@ -7,6 +7,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.hmtmcse.fileutil.data.TextFileData;
 import com.hmtmcse.fileutil.text.TextFile;
 import com.hmtmcse.parser4java.common.Parser4JavaException;
+
 import java.util.LinkedHashMap;
 
 
@@ -62,4 +63,7 @@ public class YamlProcessor {
         }
     }
 
+    public static YamlProcessor instance() {
+        return new YamlProcessor();
+    }
 }
